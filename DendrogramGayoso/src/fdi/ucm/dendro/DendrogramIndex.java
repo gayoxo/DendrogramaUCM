@@ -44,7 +44,7 @@ public class DendrogramIndex extends DState {
 			
 			
 			for (Integer integer : Final.getIntent()) 
-				if (!tagsFor.contains(integer))
+				if (!processT.contains(integer))
 					toExtend.add(integer);
 				else
 					{
@@ -79,14 +79,14 @@ public class DendrogramIndex extends DState {
 					else
 						//Transito a nuevo
 						{
-						Final=creaNodo(Final, tagsFor);
+						Final=creaNodo(Final, processT);
 						found_=true;
 						}
 				}
 				else
 				{
 //					Divido
-					DState NewStat=Final.cloneS();
+					DState NewStat=Final.cloneS(toExtend);
 					Final.getResources().clear();
 					Final.getIntent().clear();
 					for (Integer integer2 : newIntent) 
@@ -96,7 +96,7 @@ public class DendrogramIndex extends DState {
 					
 					Final.getTransit().add(NewStat);
 					
-					Final=creaNodo(Final, tagsFor);
+					Final=creaNodo(Final, processT);
 					found_=true;
 					
 					
@@ -124,15 +124,88 @@ public class DendrogramIndex extends DState {
 		return null;
 	}
 
-	private DState creaNodo(DState final1, RoaringBitmap tagsFor) {
+	private DState creaNodo(DState final1, Set<Integer> processT) {
 		DState nuevo=new DState();
-		nuevo.setIntent(tagsFor);
+		for (Integer integer : processT)
+			nuevo.getIntent().add(integer);
 		final1.getTransit().add(nuevo);
 		return nuevo;
 	}
 
 	public DendrogramIndex() {
 		Inicial	= new DState();
+	}
+
+	public void DeleteResource(int resource, RoaringBitmap tagsFor,
+			DCollection collection) {
+		DState Final = Inicial;
+		DState Father = null;
+		boolean found_=false;
+		
+		Set<Integer> processT= new HashSet<Integer>();
+		for (Integer integer : tagsFor)
+			processT.add(integer);
+		
+		
+		DState[] Salida=FindResourceDelete(tagsFor,resource);
+		
+		Final= Salida[0];
+		Father= Salida[1];
+		
+		while (!found_)
+		{
+			if (Final.getResources().contains(resource))
+			{
+				found_=true;
+				break;
+			}
+			
+			for (Integer integer : Final.getIntent())
+				processT.remove(integer);
+			
+			//DIFICIL
+		}
+		
+		if (found_)
+		{
+			Final.getResources().remove(resource);
+			
+			if (Final.getResources().getCardinality()==0&&Final.getTransit().isEmpty())
+			{
+				//Este es candidato a ser borrado
+				if (Father!=null)
+					{
+					Father.getTransit().remove(Final);
+					
+					if (Father.getTransit().size()==1)
+					{
+						
+						DState Hijo = Father.getTransit().remove(0);
+						for (Integer hijo : Hijo.getResources())
+							Father.getResources().add(hijo);
+
+						for (Integer hijo : Hijo.getIntent())
+							{
+							Father.getIntent().add(hijo);
+							Father.getExtend().remove(hijo);
+							}
+						
+						
+					}
+					}
+				
+			}
+			
+		}
+		
+		
+		
+	}
+
+	private DState[] FindResourceDelete(RoaringBitmap tagsFor, int resource) {
+		DState[] Salida=new DState[2];
+		
+		return Salida;
 	}
 
 }

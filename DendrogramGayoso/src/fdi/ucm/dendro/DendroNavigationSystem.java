@@ -32,7 +32,12 @@ public class DendroNavigationSystem implements NavigationSystem {
     		collection.addObject(a.getResource(), a.getTagsFor());
     		collection.addTags(a.getTagsFor());
     		iindex.InsertResource(a.getResource(), a.getTagsFor());
-    	}
+    	}else
+    		if (a.isDelete())
+    		{
+    			iindex.DeleteResource(a.getResource(), collection.getTagsFor(a.getResource()),collection);
+    			collection.removeObject(a.getResource(), collection.getTagsFor(a.getResource()));
+    		}
     }
 
     @Override

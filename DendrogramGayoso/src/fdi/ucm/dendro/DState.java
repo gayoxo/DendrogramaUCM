@@ -2,6 +2,7 @@ package fdi.ucm.dendro;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import org.roaringbitmap.RoaringBitmap;
 
 public class DState {
@@ -39,9 +40,9 @@ public class DState {
 		return extend;
 	}
 	
-	public DState cloneS() {
+	public DState cloneS(List<Integer> toExtend) {
 		DState Salida=new DState();
-		for (Integer integer : intent)
+		for (Integer integer : toExtend)
 			Salida.getIntent().add(integer);
 		
 		for (Integer integer : resources) 

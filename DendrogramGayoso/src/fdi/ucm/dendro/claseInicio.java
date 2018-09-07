@@ -50,22 +50,22 @@ public class claseInicio {
 	     while (!pendientesInsert.isEmpty()) {
 
 //FAS1
-////	    	 //Borrar un 10
-//	    	 if (col.getResources().getCardinality()!=0)
-//	    	 {
-//	    		 long nactionDel = 10;
-//	    		 while (nactionDel>0)
-//	    		 {
-//	    		 int Borrar=RAND.nextInt(RecursosInsertados.size());//RAND.nextInt(ActualInsertIndex);
-//	    		 
-//	    		 int Recurso = RecursosInsertados.get(Borrar);
-//	                 RecursosInsertados.remove(Borrar);
-//	    		 actions.add(makeDeleteAction(Recurso));
-//	    		 col.removeObject(Recurso, colIni.getTagsFor(Recurso));
-//	    		 nactionDel--;
-//	    		 pendientesInsert.add(Recurso);
-//	    		 }
-//	    	 }
+//	    	 //Borrar un 10
+	    	 if (col.getResources().getCardinality()!=0)
+	    	 {
+	    		 long nactionDel = 10;
+	    		 while (nactionDel>0)
+	    		 {
+	    		 int Borrar=RAND.nextInt(RecursosInsertados.size());//RAND.nextInt(ActualInsertIndex);
+	    		 
+	    		 int Recurso = RecursosInsertados.get(Borrar);
+	                 RecursosInsertados.remove(Borrar);
+	    		 actions.add(makeDeleteAction(Recurso));
+	    		 col.removeObject(Recurso, colIni.getTagsFor(Recurso));
+	    		 nactionDel--;
+	    		 pendientesInsert.add(Recurso);
+	    		 }
+	    	 }
 	    	 
 	    	 
 	    	 //Insercion de 100 Elementos
@@ -125,7 +125,11 @@ public class claseInicio {
 	 }   
 	
 	
-	 private static NavigationAction makeInsertAction(RoaringBitmap tagsFor, Integer recurso) {
+	 private static NavigationAction makeDeleteAction(int recurso) {
+		 return new DeleteNA(recurso);
+	}
+
+	private static NavigationAction makeInsertAction(RoaringBitmap tagsFor, Integer recurso) {
 			return new InsertNA(tagsFor,recurso);
 		}
 	 
