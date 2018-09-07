@@ -205,6 +205,44 @@ public class DendrogramIndex extends DState {
 	private DState[] FindResourceDelete(RoaringBitmap tagsFor, int resource) {
 		DState[] Salida=new DState[2];
 		
+		if (Inicial.getResources().contains(resource))
+			Salida[0]=Inicial;
+		else
+			Salida=recursiveFind(tagsFor,resource,Inicial);
+		
+		return Salida;
+	}
+
+	private DState[] recursiveFind(RoaringBitmap tagsFor, int resource,
+			DState father) {
+		DState[] Salida=new DState[2];
+		
+		LinkedList<DState> posibles=new LinkedList<DState>();
+		
+		for (DState integer : father.getTransit()) {
+			for (Integer integerR : tagsFor) {
+				if (integer.getIntent().contains(integerR))
+					{
+					posibles.add(integer);
+					break;
+					}
+			}
+			
+		}
+		
+		for (DState dState : posibles) {
+			if (dState.getResources().contains(resource))
+				{
+				Salida[0]=dState;
+				Salida[1]=father;
+				}
+			else
+				Salida=recursiveFind(tagsFor,resource,dState);
+			
+			if (Salida[0]!=null&&Salida[1]!=null)
+				break;
+		}
+		
 		return Salida;
 	}
 
