@@ -1,11 +1,7 @@
 package fdi.ucm.dendro;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import org.roaringbitmap.RoaringBitmap;
 
 public class DState {
