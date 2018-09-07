@@ -1,7 +1,8 @@
 package fdi.ucm.dendro;
 
-import java.awt.List;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -11,13 +12,15 @@ public class DState {
 
 	 private RoaringBitmap resources;
 	 private RoaringBitmap intent;
-	 private Map<Integer,DState> transit;
+	 private RoaringBitmap extend;
+	 private List<DState> transit;
 	 
 	 
 	 public DState() {
 		resources=new RoaringBitmap();
 		intent=new RoaringBitmap();
-		transit=new HashMap<>();
+		extend=new RoaringBitmap();
+		transit=new LinkedList<DState>();
 	}
 	
 	public RoaringBitmap getResources() {
@@ -28,7 +31,7 @@ public class DState {
 		return intent;
 	}
 	
-	public Map<Integer, DState> getTransit() {
+	public List<DState> getTransit() {
 		return transit;
 	}
 	
@@ -36,6 +39,10 @@ public class DState {
 		this.intent = intent;
 	}
 
+	public RoaringBitmap getExtend() {
+		return extend;
+	}
+	
 	public DState cloneS() {
 		DState Salida=new DState();
 		for (Integer integer : intent)

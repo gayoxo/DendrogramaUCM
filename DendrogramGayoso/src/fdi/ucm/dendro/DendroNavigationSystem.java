@@ -4,14 +4,20 @@ import org.roaringbitmap.RoaringBitmap;
 
 public class DendroNavigationSystem implements NavigationSystem {
    protected DCollection collection;
-   protected DState Inicial;
+   protected DendrogramIndex iindex;
+
+
    
    
 
    public DendroNavigationSystem(DCollection collection,boolean vacio) {
      this.collection = collection; 
      
-     Inicial=new DState();
+     
+     if (vacio)
+    	 this.iindex = new DendrogramIndex();
+     else
+    	 this.iindex = new DendrogramIndex(collection);
    }
    
        @Override
@@ -21,7 +27,12 @@ public class DendroNavigationSystem implements NavigationSystem {
 
     @Override
     public void run(NavigationAction a) {
-        
+    	if (a.isInsert())
+    	{
+    		collection.addObject(a.getResource(), a.getTagsFor());
+    		collection.addTags(a.getTagsFor());
+    		iindex.InsertResource(a.getResource(), a.getTagsFor());
+    	}
     }
 
     @Override

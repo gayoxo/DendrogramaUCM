@@ -14,7 +14,7 @@ import org.roaringbitmap.RoaringBitmap;
 public class claseInicio {
 
 	private static final Random RAND=new Random();
-	private final static int STEP=1000;
+	private final static int STEP=100;
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		 DCollection col = new DCollection();
