@@ -163,23 +163,9 @@ public class DendrogramIndex {
 		Final= SalidaN;
 		Father= SalidaN.getFather();
 		
-		while (!found_)
-		{
-			if (Final.getResources().contains(resource))
-			{
-				found_=true;
-				break;
-			}
-			
-			for (Integer integer : Final.getIntent())
-				processT.remove(integer);
-			
-			//DIFICIL
-		}
 		
-		if (found_)
-		{
-			Final.getResources().remove(resource);
+		Final.getResources().remove(resource);
+		
 			
 			if (Final.getResources().getCardinality()==0&&Final.getTransit().isEmpty())
 			{
@@ -208,7 +194,7 @@ public class DendrogramIndex {
 			}
 			
 		}
-		}
+		
 		
 		
 		
