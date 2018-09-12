@@ -11,6 +11,7 @@ public class DState {
 	 private RoaringBitmap intent;
 	 private RoaringBitmap extend;
 	 private List<DState> transit;
+	 private DState father;
 	 
 	 
 	 public DState() {
@@ -18,6 +19,7 @@ public class DState {
 		intent=new RoaringBitmap();
 		extend=new RoaringBitmap();
 		transit=new LinkedList<DState>();
+		father=null;
 	}
 	
 	public RoaringBitmap getResources() {
@@ -52,5 +54,11 @@ public class DState {
 		return Salida;
 	}
 	
+	public DState getFather() {
+		return father;
+	}
 	
+	public void setFather(DState father) {
+		this.father = father;
+	}
 }

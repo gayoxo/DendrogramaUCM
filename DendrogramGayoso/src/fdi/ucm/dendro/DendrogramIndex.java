@@ -1,5 +1,6 @@
 package fdi.ucm.dendro;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,12 +8,19 @@ import java.util.Set;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class DendrogramIndex extends DState {
+public class DendrogramIndex {
 
 	protected DState Inicial;
+	protected HashMap<Integer, DState> TablaRecursos;
+	
+	public DendrogramIndex() {
+		Inicial	= new DState();
+		TablaRecursos= new HashMap<Integer, DState>();
+	}
 	
 	public DendrogramIndex(DCollection collection) {
 		Inicial	= new DState();
+		TablaRecursos= new HashMap<Integer, DState>();
 		for (Integer doc : collection.getResources()) {
 			InsertResource(doc,collection.getTagsFor(doc));
 		}
@@ -95,6 +103,7 @@ public class DendrogramIndex extends DState {
 						Final.getExtend().add(integer2);
 					
 					Final.getTransit().add(NewStat);
+					NewStat.setFather(Final);
 					
 					Final=creaNodo(Final, processT);
 					found_=true;
@@ -112,7 +121,7 @@ public class DendrogramIndex extends DState {
 			
 		}
 		Final.getResources().add(doc);
-		
+		TablaRecursos.put(doc, Final);
 		
 	}
 
@@ -129,12 +138,11 @@ public class DendrogramIndex extends DState {
 		for (Integer integer : processT)
 			nuevo.getIntent().add(integer);
 		final1.getTransit().add(nuevo);
+		nuevo.setFather(final1);
 		return nuevo;
 	}
 
-	public DendrogramIndex() {
-		Inicial	= new DState();
-	}
+	
 
 	public void DeleteResource(int resource, RoaringBitmap tagsFor,
 			DCollection collection) {
@@ -147,10 +155,13 @@ public class DendrogramIndex extends DState {
 			processT.add(integer);
 		
 		
-		DState[] Salida=FindResourceDelete(tagsFor,resource);
+		DState SalidaN=TablaRecursos.get(new Integer(resource));
 		
-		Final= Salida[0];
-		Father= Salida[1];
+		if (SalidaN!=null)
+		{
+		
+		Final= SalidaN;
+		Father= SalidaN.getFather();
 		
 		while (!found_)
 		{
@@ -197,53 +208,13 @@ public class DendrogramIndex extends DState {
 			}
 			
 		}
+		}
 		
 		
 		
 	}
 
-	private DState[] FindResourceDelete(RoaringBitmap tagsFor, int resource) {
-		DState[] Salida=new DState[2];
-		
-		if (Inicial.getResources().contains(resource))
-			Salida[0]=Inicial;
-		else
-			Salida=recursiveFind(tagsFor,resource,Inicial);
-		
-		return Salida;
-	}
 
-	private DState[] recursiveFind(RoaringBitmap tagsFor, int resource,
-			DState father) {
-		DState[] Salida=new DState[2];
-		
-		LinkedList<DState> posibles=new LinkedList<DState>();
-		
-		for (DState integer : father.getTransit()) {
-			for (Integer integerR : tagsFor) {
-				if (integer.getIntent().contains(integerR))
-					{
-					posibles.add(integer);
-					break;
-					}
-			}
-			
-		}
-		
-		for (DState dState : posibles) {
-			if (dState.getResources().contains(resource))
-				{
-				Salida[0]=dState;
-				Salida[1]=father;
-				}
-			else
-				Salida=recursiveFind(tagsFor,resource,dState);
-			
-			if (Salida[0]!=null&&Salida[1]!=null)
-				break;
-		}
-		
-		return Salida;
-	}
+
 
 }
