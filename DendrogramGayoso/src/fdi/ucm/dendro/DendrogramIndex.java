@@ -243,7 +243,10 @@ public RoaringBitmap getSelectableTags(LinkedList<DState> actualState) {
 	for (DState integer : actualState)
 		{
 		Extend.or(integer.getExtend());
-		Intersec.and(integer.getIntent());
+		if (Intersec.isEmpty())
+			Intersec.or(integer.getIntent());
+		else
+			Intersec.and(integer.getIntent());
 		Intersec2.or(integer.getIntent());
 		}
 	

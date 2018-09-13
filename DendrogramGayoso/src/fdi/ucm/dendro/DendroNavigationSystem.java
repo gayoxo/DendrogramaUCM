@@ -63,7 +63,7 @@ public class DendroNavigationSystem implements NavigationSystem {
     		        selectableTags = iindex.getSelectableTags(ActualState);
     			}
     			else
-    				if (a.isDelete())
+    				if (a.isRemove())
     				{
     					 activeTags.remove(a.getTag());
     					 

@@ -18,7 +18,7 @@ public class claseInicio {
 	private static final Random RAND=new Random();
 	private final static int STEP=10000;
 	
-	private static final int Base = 10000;
+	private static final int Base = 1;
 	private static final boolean debug = true;
 
 	
@@ -172,7 +172,7 @@ public class claseInicio {
 	 private static void simulate(NavigationSystem ns,NavigationAction[] actions, boolean out) {
 	     long time=0;
 	 	int getReso = 10;
-		int getActive = 10;
+		int getActive = 0;
 	     long begin = System.nanoTime();
 	     ns.init();
 	     long end = System.nanoTime();
@@ -190,7 +190,7 @@ public class claseInicio {
 	        	 getReso--;
 	         }
 	         if ((actions[a].isAdd()||actions[a].isRemove()) && debug && a>Base && getActive>0) {
-	        	 System.out.println("Res->"+ns.getSelectableTags());
+	        	 System.out.println("Sel->"+ns.getSelectableTags());
 	        	 getActive--;
 	         }
 	        	 
