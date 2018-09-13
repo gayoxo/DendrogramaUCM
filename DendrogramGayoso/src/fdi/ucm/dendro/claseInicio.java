@@ -18,6 +18,10 @@ public class claseInicio {
 	private static final Random RAND=new Random();
 	private final static int STEP=10000;
 	
+	private static final int Base = 10000;
+	private static final boolean debug = true;
+
+	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		 DCollection col = new DCollection();
 		   col.load(new FileReader(args[0]));
@@ -29,6 +33,9 @@ public class claseInicio {
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("BASIC");
 		   simulate(new BasicNavigationSystem(new DCollection(),true),actions,true);
+		   System.gc();System.gc();System.gc();System.gc();
+		   System.out.println("Cache Advance");
+		   simulate(new CachedAdvancedNavigationSystem(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Dendrogram");
 		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
@@ -164,6 +171,8 @@ public class claseInicio {
 	 
 	 private static void simulate(NavigationSystem ns,NavigationAction[] actions, boolean out) {
 	     long time=0;
+	 	int getReso = 10;
+		int getActive = 10;
 	     long begin = System.nanoTime();
 	     ns.init();
 	     long end = System.nanoTime();
@@ -175,6 +184,16 @@ public class claseInicio {
 	         end = System.nanoTime();
 	         time += (end-begin);
 	         if ((a+1)%STEP == 0 && out) System.out.println((a+1)+"\t"+time);
+	         
+	         if ((actions[a].isAdd()||actions[a].isRemove())&& debug && a>Base && getReso>0) {
+	        	 System.out.println("Res->"+ns.getFilteredResources());
+	        	 getReso--;
+	         }
+	         if ((actions[a].isAdd()||actions[a].isRemove()) && debug && a>Base && getActive>0) {
+	        	 System.out.println("Res->"+ns.getSelectableTags());
+	        	 getActive--;
+	         }
+	        	 
 	     }
 	 }
 }
