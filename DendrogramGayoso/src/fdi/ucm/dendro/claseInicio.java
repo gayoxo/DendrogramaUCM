@@ -171,7 +171,7 @@ public class claseInicio {
 	 
 	 private static void simulate(NavigationSystem ns,NavigationAction[] actions, boolean out) {
 	     long time=0;
-	 	int getReso = 0;
+	 	int getReso = 10;
 		int getActive = 10;
 	     long begin = System.nanoTime();
 	     ns.init();
