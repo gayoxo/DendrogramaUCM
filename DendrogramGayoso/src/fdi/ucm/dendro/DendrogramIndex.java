@@ -200,6 +200,58 @@ public class DendrogramIndex {
 	}
 
 
+public DState getInicial() {
+	return Inicial;
+}
 
+public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {
+	LinkedList<DState> Salida=new LinkedList<>();
+	
+	for (DState dState : actualState) 
+		Salida.addAll(transit(dState,tag));
+	
+	return Salida;
+}
+
+private LinkedList<DState> transit(DState dState, int tag) {
+	LinkedList<DState> Salida=new LinkedList<>();
+	
+	if (dState.getIntent().contains(tag))
+		Salida.add(dState);
+	else
+		if (dState.getExtend().contains(tag))
+			for (DState dState2 : dState.getTransit())
+				Salida.addAll(transit(dState2, tag));
+	
+	return Salida;
+}
+
+public RoaringBitmap getResources(List<DState> actualState) {
+	RoaringBitmap Extend=new RoaringBitmap();
+	for (DState integer : actualState) {
+		Extend.or(integer.getResources());
+		Extend.or(getResources(integer.getTransit()));
+	}
+	return Extend;
+}
+
+public RoaringBitmap getSelectableTags(LinkedList<DState> actualState) {
+	RoaringBitmap Extend=new RoaringBitmap();
+	RoaringBitmap Intersec=new RoaringBitmap();
+	RoaringBitmap Intersec2=new RoaringBitmap();
+	for (DState integer : actualState)
+		{
+		Extend.or(integer.getExtend());
+		Intersec.and(integer.getIntent());
+		Intersec2.or(integer.getIntent());
+		}
+	
+	for (Integer integer : Intersec)
+		Intersec2.remove(integer);
+
+	Extend.or(Intersec2);
+	
+	return Extend;
+}
 
 }

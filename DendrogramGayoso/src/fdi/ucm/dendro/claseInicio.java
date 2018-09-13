@@ -11,10 +11,12 @@ import java.util.Random;
 import org.roaringbitmap.RoaringBitmap;
 
 
+
+
 public class claseInicio {
 
 	private static final Random RAND=new Random();
-	private final static int STEP=100;
+	private final static int STEP=10000;
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		 DCollection col = new DCollection();
@@ -39,9 +41,8 @@ public class claseInicio {
 
 	     
 // FAS1
-//	     NavigationSystem ns=null;
+	     NavigationSystem ns=null;
 	     
-	     Random r = new Random();
 	     int ActualInsertIndex=0;
 	     PriorityQueue<Integer> pendientesInsert=new PriorityQueue<Integer>();
 	     for (Integer integer : colIni.getResources())
@@ -82,36 +83,36 @@ public class claseInicio {
 	    	 ActualInsertIndex=col.getResources().getCardinality();
 	    	 
 //FAS1	    	 
-//	    	 
-//	    	 //Lo creo y que construya todo
-//	    	 ns = new CachedNavigationSystem(col,false);
-//		     ns.init();
-//	    	 
-//	    	
-//	    	 
-//	    	 //Calculo acciones
-//	    	 long naction = Math.round(ActualInsertIndex*5);
-//	    	 
-//	    	 while (naction>0)
-//	    	 {
-//	    		 NavigationAction Aplicar=null; 
-//	    		 
-//		        if (ns.getActiveTags().getCardinality() > 0 && ns.getSelectableTags().getCardinality() > 0) {
-//		            if (RAND.nextInt(2)==0)
-//		            	Aplicar = makeAddAction(ns,activeTags);
-//		            else 
-//		            	Aplicar = makeRemoveAction(ns,activeTags);
-//		        }  
-//		        else if (ns.getActiveTags().getCardinality() == 0) {
-//		        	Aplicar = makeAddAction(ns,activeTags);            
-//		        }
-//		        else {
-//		        	Aplicar = makeRemoveAction(ns,activeTags);
-//		        }
-//		        ns.run(Aplicar);
-//		       naction--;
-//		       actions.add(Aplicar);
-//	    	 }
+	    	 
+	    	 //Lo creo y que construya todo
+	    	 ns = new BasicNavigationSystem(col,false);
+		     ns.init();
+	    	 
+	    	
+	    	 
+	    	 //Calculo acciones
+	    	 long naction = Math.round(ActualInsertIndex*5);
+	    	 
+	    	 while (naction>0)
+	    	 {
+	    		 NavigationAction Aplicar=null; 
+	    		 
+		        if (ns.getActiveTags().getCardinality() > 0 && ns.getSelectableTags().getCardinality() > 0) {
+		            if (RAND.nextInt(2)==0)
+		            	Aplicar = makeAddAction(ns,activeTags);
+		            else 
+		            	Aplicar = makeRemoveAction(ns,activeTags);
+		        }  
+		        else if (ns.getActiveTags().getCardinality() == 0) {
+		        	Aplicar = makeAddAction(ns,activeTags);            
+		        }
+		        else {
+		        	Aplicar = makeRemoveAction(ns,activeTags);
+		        }
+		        ns.run(Aplicar);
+		       naction--;
+		       actions.add(Aplicar);
+	    	 }
 	    	 
 	    	
 	    	 
@@ -133,6 +134,27 @@ public class claseInicio {
 			return new InsertNA(tagsFor,recurso);
 		}
 	 
+	
+	private static NavigationAction makeAddAction(NavigationSystem ns,List<Integer> activeTags) {
+	     int tag = ns.getSelectableTags().select(RAND.nextInt(ns.getSelectableTags().getCardinality()));
+	     activeTags.add(0,tag);
+	     return new AddNA(tag);
+	 }   
+
+	 private static int grand(int top) {
+	     for(int i=0; i < top-1; i++) {
+	         if(RAND.nextInt(2)==0) return i;
+	     }
+	     return top; 
+	 }  
+	
+	
+	 private static NavigationAction makeRemoveAction(NavigationSystem ns,List<Integer> activeTags) {
+	     int k = grand(ns.getActiveTags().getCardinality()-1);
+	     int tag = activeTags.get(k);
+	     activeTags.remove(k);
+	     return new RemoveNA(tag); 
+	 }   
 	 
 	 private static void simulate(NavigationSystem ns,NavigationAction[] actions, boolean out) {
 	     long time=0;
