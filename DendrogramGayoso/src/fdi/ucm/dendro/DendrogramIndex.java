@@ -148,7 +148,6 @@ public class DendrogramIndex {
 			DCollection collection) {
 		DState Final = Inicial;
 		DState Father = null;
-		boolean found_=false;
 		
 		Set<Integer> processT= new HashSet<Integer>();
 		for (Integer integer : tagsFor)
