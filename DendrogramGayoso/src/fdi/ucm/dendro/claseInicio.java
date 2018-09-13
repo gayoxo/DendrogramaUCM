@@ -23,12 +23,18 @@ public class claseInicio {
 		   col.load(new FileReader(args[0]));
 		   System.out.println("Collection loaded");
 		   NavigationAction[] actions = makeActions(col);
+		   
+		   
+		   
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("BASIC");
 		   simulate(new BasicNavigationSystem(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Dendrogram");
 		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
+		   System.gc();System.gc();System.gc();System.gc();
+		   System.out.println("Dendrogram Cached");
+		   simulate(new DendroNavigationSystemAdvance(new DCollection(),true),actions,true);
 		   
 		   
 	}

@@ -11,15 +11,16 @@ import org.roaringbitmap.RoaringBitmap;
 public class DendrogramIndex {
 
 	protected DState Inicial;
+	static int ide=0;
 	protected HashMap<Integer, DState> TablaRecursos;
 	
 	public DendrogramIndex() {
-		Inicial	= new DState();
+		Inicial	= new DState(ide++);
 		TablaRecursos= new HashMap<Integer, DState>();
 	}
 	
 	public DendrogramIndex(DCollection collection) {
-		Inicial	= new DState();
+		Inicial	= new DState(ide++);
 		TablaRecursos= new HashMap<Integer, DState>();
 		for (Integer doc : collection.getResources()) {
 			InsertResource(doc,collection.getTagsFor(doc));
@@ -94,7 +95,7 @@ public class DendrogramIndex {
 				else
 				{
 //					Divido
-					DState NewStat=Final.cloneS(toExtend);
+					DState NewStat=Final.cloneS(toExtend,ide++);
 					Final.getResources().clear();
 					Final.getIntent().clear();
 					for (Integer integer2 : newIntent) 
@@ -134,7 +135,7 @@ public class DendrogramIndex {
 	}
 
 	private DState creaNodo(DState final1, Set<Integer> processT) {
-		DState nuevo=new DState();
+		DState nuevo=new DState(ide++);
 		for (Integer integer : processT)
 			nuevo.getIntent().add(integer);
 		final1.getTransit().add(nuevo);

@@ -19,13 +19,20 @@ public class DendroNavigationSystem implements NavigationSystem {
      activeTags=new RoaringBitmap();
      ActualState=new LinkedList<>();
      
-     if (vacio)
-    	 this.iindex = new DendrogramIndex();
-     else
-    	 this.iindex = new DendrogramIndex(collection);
+     createindex(vacio);
+     
+    
    }
    
-       @Override
+       protected void createindex(boolean vacio) {
+    	   if (vacio)
+    	    	 this.iindex = new DendrogramIndex();
+    	     else
+    	    	 this.iindex = new DendrogramIndex(collection);
+	
+}
+
+	@Override
     public void init() {
 
     }
@@ -71,19 +78,21 @@ public class DendroNavigationSystem implements NavigationSystem {
     				}
     }
 
-    @Override
+
+
+	@Override
     public RoaringBitmap getFilteredResources() {
-        return null;
+        return filteredResources;
     }
 
     @Override
     public RoaringBitmap getActiveTags() {
-        return null;
+        return activeTags;
     }
 
     @Override
     public RoaringBitmap getSelectableTags() {
-        return null;
+        return selectableTags;
     }
 
    

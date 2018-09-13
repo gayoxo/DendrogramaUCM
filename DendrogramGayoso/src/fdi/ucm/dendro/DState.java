@@ -12,9 +12,11 @@ public class DState {
 	 private RoaringBitmap extend;
 	 private List<DState> transit;
 	 private DState father;
+	 private Integer Ide;
 	 
 	 
-	 public DState() {
+	 public DState(int ide) {
+		Ide=new Integer(ide);
 		resources=new RoaringBitmap();
 		intent=new RoaringBitmap();
 		extend=new RoaringBitmap();
@@ -42,8 +44,8 @@ public class DState {
 		return extend;
 	}
 	
-	public DState cloneS(List<Integer> toExtend) {
-		DState Salida=new DState();
+	public DState cloneS(List<Integer> toExtend,Integer ide) {
+		DState Salida=new DState(ide);
 		for (Integer integer : toExtend)
 			Salida.getIntent().add(integer);
 		
@@ -60,5 +62,9 @@ public class DState {
 	
 	public void setFather(DState father) {
 		this.father = father;
+	}
+
+	public Integer getIde() {
+		return Ide;
 	}
 }
