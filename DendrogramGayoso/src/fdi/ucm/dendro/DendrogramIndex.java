@@ -47,6 +47,8 @@ public class DendrogramIndex {
 		while (!found_)
 		{
 			
+			actionAboveFinal(Final);
+			
 			
 			List<Integer> toExtend=new LinkedList<Integer>();
 			List<Integer> newIntent=new LinkedList<Integer>();
@@ -122,7 +124,13 @@ public class DendrogramIndex {
 			
 		}
 		Final.getResources().add(doc);
+		actionAboveFinal(Final);
 		TablaRecursos.put(doc, Final);
+		
+	}
+
+	protected void actionAboveFinal(DState final1) {
+		// En este caso nada
 		
 	}
 

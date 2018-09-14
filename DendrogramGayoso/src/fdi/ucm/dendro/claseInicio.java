@@ -48,6 +48,9 @@ public class claseInicio {
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Dendrogram Cached V2");
 		   simulate(new DendroNavigationSystemAdvanceV2(new DCollection(),true),actions,true);
+		   System.gc();System.gc();System.gc();System.gc();
+		   System.out.println("Dendrogram Cached V3");
+		   simulate(new DendroNavigationSystemAdvanceV3(new DCollection(),true),actions,true);
 		   
 		   
 	}

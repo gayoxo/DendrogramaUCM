@@ -7,7 +7,7 @@ import org.roaringbitmap.RoaringBitmap;
 public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 
 
-	private HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>> CacheTrans;
+	protected HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>> CacheTrans;
 	private static boolean debug=false;
 
 	public DendrogramIndexAdvanceV2() {
@@ -23,15 +23,19 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 	@Override
 	public void InsertResource(Integer doc, RoaringBitmap tagsFor) {
 		super.InsertResource(doc, tagsFor);
-		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
 	}
 	
 	@Override
 	public void DeleteResource(int resource, RoaringBitmap tagsFor, DCollection collection) {
 		super.DeleteResource(resource, tagsFor, collection);
-		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
+		
 	}
 
+	@Override
+	protected void cleanCache() {
+		super.cleanCache();
+		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
+	}
 	
 	@Override
 	public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {

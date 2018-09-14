@@ -11,8 +11,8 @@ import org.roaringbitmap.RoaringBitmap;
 public class DendrogramIndexAdvance extends DendrogramIndex{
 
 
-	private HashMap<RoaringBitmap,RoaringBitmap> CacheResor;
-	private HashMap<RoaringBitmap,RoaringBitmap> CacheSelect;
+	protected HashMap<RoaringBitmap,RoaringBitmap> CacheResor;
+	protected HashMap<RoaringBitmap,RoaringBitmap> CacheSelect;
 	private static boolean debug=false;
 	protected Comparator<DState> comparator=new Comparator<DState>() {
 
@@ -37,17 +37,20 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 	@Override
 	public void InsertResource(Integer doc, RoaringBitmap tagsFor) {
 		super.InsertResource(doc, tagsFor);
+		cleanCache();
+	}
+
+	@Override
+	public void DeleteResource(int resource, RoaringBitmap tagsFor, DCollection collection) {
+		super.DeleteResource(resource, tagsFor, collection);
+		cleanCache();
+		}
+
+	protected void cleanCache() {
 		CacheResor=new HashMap<RoaringBitmap,RoaringBitmap>();
 		CacheSelect=new HashMap<RoaringBitmap,RoaringBitmap>();
 	}
 	
-	@Override
-	public void DeleteResource(int resource, RoaringBitmap tagsFor, DCollection collection) {
-		super.DeleteResource(resource, tagsFor, collection);
-		CacheResor=new HashMap<RoaringBitmap,RoaringBitmap>();
-		CacheSelect=new HashMap<RoaringBitmap,RoaringBitmap>();
-	}
-
 	@Override
 	public RoaringBitmap getResources(List<DState> actualState) {
 		
