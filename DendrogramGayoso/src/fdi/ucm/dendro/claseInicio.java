@@ -19,7 +19,7 @@ public class claseInicio {
 	private final static int STEP=10000;
 	
 	private static final int Base = 1;
-	private static final boolean debug = true;
+	public static boolean debug = false;
 
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -33,6 +33,9 @@ public class claseInicio {
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("BASIC");
 		   simulate(new BasicNavigationSystem(new DCollection(),true),actions,true);
+		   System.gc();System.gc();System.gc();System.gc();
+		   System.out.println("Cache");
+		   simulate(new CachedNavigationSystem(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Cache Advance");
 		   simulate(new CachedAdvancedNavigationSystem(new DCollection(),true),actions,true);
@@ -98,7 +101,7 @@ public class claseInicio {
 //FAS1	    	 
 	    	 
 	    	 //Lo creo y que construya todo
-	    	 ns = new BasicNavigationSystem(col,false);
+	    	 ns = new CachedNavigationSystem(col,false);
 		     ns.init();
 	    	 
 	    	
