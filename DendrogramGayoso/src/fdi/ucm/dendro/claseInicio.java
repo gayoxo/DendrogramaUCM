@@ -30,21 +30,24 @@ public class claseInicio {
 		   
 		   
 		   
-		   System.gc();System.gc();System.gc();System.gc();
-		   System.out.println("BASIC");
-		   simulate(new BasicNavigationSystem(new DCollection(),true),actions,true);
-		   System.gc();System.gc();System.gc();System.gc();
-		   System.out.println("Cache");
-		   simulate(new CachedNavigationSystem(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("BASIC");
+//		   simulate(new BasicNavigationSystem(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("Cache");
+//		   simulate(new CachedNavigationSystem(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Cache Advance");
 		   simulate(new CachedAdvancedNavigationSystem(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
-		   System.out.println("Dendrogram");
-		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
-		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("Dendrogram");
+//		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Dendrogram Cached");
 		   simulate(new DendroNavigationSystemAdvance(new DCollection(),true),actions,true);
+		   System.gc();System.gc();System.gc();System.gc();
+		   System.out.println("Dendrogram Cached V2");
+		   simulate(new DendroNavigationSystemAdvanceV2(new DCollection(),true),actions,true);
 		   
 		   
 	}

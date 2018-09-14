@@ -14,7 +14,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 	private HashMap<RoaringBitmap,RoaringBitmap> CacheResor;
 	private HashMap<RoaringBitmap,RoaringBitmap> CacheSelect;
 	private static boolean debug=false;
-	private Comparator<DState> comparator=new Comparator<DState>() {
+	protected Comparator<DState> comparator=new Comparator<DState>() {
 
 		@Override
 		public int compare(DState o1, DState o2) {
@@ -93,5 +93,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		
 		return Salida;
 	}
+	
+	
 	
 }
