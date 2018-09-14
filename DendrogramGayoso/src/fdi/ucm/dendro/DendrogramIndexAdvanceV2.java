@@ -71,17 +71,6 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 	
 
 
-	public LinkedList<DState> transitFather(List<DState> actualState, int tag) {
-		return super.transit(actualState, tag);
-	}
-
-	public RoaringBitmap getResourcesFather(List<DState> actualState) {
-		return super.getResources(actualState);
-	}
-
-	public RoaringBitmap getSelectableTagsFather(LinkedList<DState> actualState) {
-		return super.getSelectableTags(actualState);
-	}
 
 	
 	

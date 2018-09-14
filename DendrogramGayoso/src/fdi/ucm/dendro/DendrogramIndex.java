@@ -231,7 +231,8 @@ public LinkedList<DState> transit(DState dState, int tag) {
 		Salida.add(dState);
 	else
 		if (dState.getExtend().contains(tag))
-				Salida.addAll(transit(dState.getTransit(), tag));
+			for (DState dState2 : dState.getTransit()) 
+				Salida.addAll(transit(dState2,tag));
 	
 	return Salida;
 }
