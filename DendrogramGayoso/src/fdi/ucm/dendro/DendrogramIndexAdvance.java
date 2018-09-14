@@ -57,9 +57,6 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		RoaringBitmap Salida=null;
 		
 
-		if (actualState.size()!=1)
-		{
-		
 		
 		Collections.sort(actualState,comparator);
 		
@@ -80,9 +77,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		
 		return Salida;
 		
-		}
-		else
-			return actualState.get(0).getResources();
+	
 		
 	}
 	
@@ -91,8 +86,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		
 		RoaringBitmap Salida=null;
 		
-		if (actualState.size()!=1)
-		{
+
 		Collections.sort(actualState, comparator);
 		
 		RoaringBitmap lista=new RoaringBitmap();
@@ -110,10 +104,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 				System.out.println("Cache Activa Select");
 		
 		return Salida;
-		}
-		else
-			return actualState.get(0).getExtend();
-		
+	
 		
 		
 	}

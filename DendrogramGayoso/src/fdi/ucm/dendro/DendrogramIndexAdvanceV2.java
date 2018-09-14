@@ -44,9 +44,6 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 		
 		LinkedList<DState> Salida=null;
 		
-		if (actualState.size()!=1)
-		{
-	
 		
 		RoaringBitmap lista=new RoaringBitmap();
 		
@@ -73,9 +70,7 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 		
 		return Salida;
 		
-		}
-		else
-			return super.transit(actualState.get(0), tag);
+
 	}
 	
 

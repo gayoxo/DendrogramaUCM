@@ -238,23 +238,18 @@ public LinkedList<DState> transit(DState dState, int tag) {
 }
 
 public RoaringBitmap getResources(List<DState> actualState) {
-	if (actualState.size()!=1)
-	{
+
 	RoaringBitmap Extend=new RoaringBitmap();
 	for (DState integer : actualState) {
 		Extend.or(integer.getResources());
 		Extend.or(getResources(integer.getTransit()));
 	}
 	return Extend;
-	}
-	else
-		return actualState.get(0).getResources();
+
 }
 
 public RoaringBitmap getSelectableTags(LinkedList<DState> actualState) {
 	
-	if (actualState.size()!=1)
-	{
 	RoaringBitmap Extend=new RoaringBitmap();
 	RoaringBitmap Intersec=new RoaringBitmap();
 	RoaringBitmap Intersec2=new RoaringBitmap();
@@ -274,9 +269,7 @@ public RoaringBitmap getSelectableTags(LinkedList<DState> actualState) {
 	Extend.or(Intersec2);
 	
 	return Extend;
-	}
-	else
-		return actualState.get(0).getExtend();
+
 }
 
 }
