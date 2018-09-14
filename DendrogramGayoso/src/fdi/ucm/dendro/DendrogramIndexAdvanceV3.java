@@ -68,7 +68,7 @@ public class DendrogramIndexAdvanceV3 extends DendrogramIndexAdvanceV2{
 		
 		if (Salida==null)
 		{
-		Salida=super.getResources(actualState);
+		Salida=super.getResourcesFather(actualState);
 		CacheResor.put(lista, Salida);
 		}else
 			if (debug)
@@ -111,7 +111,7 @@ public class DendrogramIndexAdvanceV3 extends DendrogramIndexAdvanceV2{
 		
 		if (Salida==null)
 		{
-		Salida= super.getSelectableTags(actualState);
+		Salida= super.getSelectableTagsFather(actualState);
 		CacheSelect.put(lista, Salida);
 		}else
 			if (debug)
@@ -121,7 +121,7 @@ public class DendrogramIndexAdvanceV3 extends DendrogramIndexAdvanceV2{
 	}
     
     @Override
-    public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {
+    public LinkedList<DState> transit(List<DState> actualState, int tag) {
 RoaringBitmap lista=new RoaringBitmap();
 		
 		for (DState integer : actualState) 
@@ -154,7 +154,7 @@ RoaringBitmap lista=new RoaringBitmap();
 		
 		if (Salida==null)
 		{
-			Salida=super.transit(actualState, tag);
+			Salida=super.transitFather(actualState, tag);
 			SalidaH.put(new Integer(tag), Salida);
 			CacheTrans.put(lista, SalidaH);
 		}
@@ -164,4 +164,6 @@ RoaringBitmap lista=new RoaringBitmap();
 		
 		return Salida;
     }
+    
+
 }

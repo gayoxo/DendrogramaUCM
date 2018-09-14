@@ -214,7 +214,7 @@ public DState getInicial() {
 	return Inicial;
 }
 
-public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {
+public LinkedList<DState> transit(List<DState> actualState, int tag) {
 	LinkedList<DState> Salida=new LinkedList<>();
 	
 	for (DState dState : actualState) 
@@ -223,15 +223,15 @@ public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {
 	return Salida;
 }
 
-private LinkedList<DState> transit(DState dState, int tag) {
+
+public LinkedList<DState> transit(DState dState, int tag) {
 	LinkedList<DState> Salida=new LinkedList<>();
 	
 	if (dState.getIntent().contains(tag))
 		Salida.add(dState);
 	else
 		if (dState.getExtend().contains(tag))
-			for (DState dState2 : dState.getTransit())
-				Salida.addAll(transit(dState2, tag));
+				Salida.addAll(transit(dState.getTransit(), tag));
 	
 	return Salida;
 }

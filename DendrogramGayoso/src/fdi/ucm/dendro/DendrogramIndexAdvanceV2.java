@@ -2,6 +2,8 @@ package fdi.ucm.dendro;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+
 import org.roaringbitmap.RoaringBitmap;
 
 public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
@@ -38,7 +40,7 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 	}
 	
 	@Override
-	public LinkedList<DState> transit(LinkedList<DState> actualState, int tag) {
+	public LinkedList<DState> transit(List<DState> actualState, int tag) {
 		
 		RoaringBitmap lista=new RoaringBitmap();
 		
@@ -66,5 +68,21 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 		
 		return Salida;
 	}
+	
+
+
+	public LinkedList<DState> transitFather(List<DState> actualState, int tag) {
+		return super.transit(actualState, tag);
+	}
+
+	public RoaringBitmap getResourcesFather(List<DState> actualState) {
+		return super.getResources(actualState);
+	}
+
+	public RoaringBitmap getSelectableTagsFather(LinkedList<DState> actualState) {
+		return super.getSelectableTags(actualState);
+	}
+
+	
 	
 }
