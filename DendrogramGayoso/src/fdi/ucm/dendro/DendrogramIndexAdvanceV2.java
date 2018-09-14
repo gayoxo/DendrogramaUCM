@@ -42,6 +42,12 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 	@Override
 	public LinkedList<DState> transit(List<DState> actualState, int tag) {
 		
+		LinkedList<DState> Salida=null;
+		
+		if (actualState.size()!=1)
+		{
+	
+		
 		RoaringBitmap lista=new RoaringBitmap();
 		
 		for (DState integer : actualState) 
@@ -49,7 +55,6 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 		
 		HashMap<Integer, LinkedList<DState>> SalidaH=CacheTrans.get(lista);
 		
-		LinkedList<DState> Salida=null;
 		
 		if (SalidaH==null)
 			SalidaH=new HashMap<Integer, LinkedList<DState>>();
@@ -67,6 +72,10 @@ public class DendrogramIndexAdvanceV2 extends DendrogramIndexAdvance{
 				System.out.println("Cache Activa Trans"); 
 		
 		return Salida;
+		
+		}
+		else
+			return super.transit(actualState.get(0), tag);
 	}
 	
 

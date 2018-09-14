@@ -54,6 +54,13 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 	@Override
 	public RoaringBitmap getResources(List<DState> actualState) {
 		
+		RoaringBitmap Salida=null;
+		
+
+		if (actualState.size()!=1)
+		{
+		
+		
 		Collections.sort(actualState,comparator);
 		
 		
@@ -62,7 +69,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		for (DState integer : actualState) 
 			lista.add(integer.getIde());
 		
-		RoaringBitmap Salida=CacheResor.get(lista);
+		Salida=CacheResor.get(lista);
 		if (Salida==null)
 			{
 			Salida=super.getResources(actualState);
@@ -72,12 +79,20 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 					System.out.println("Cache Activa Resor");
 		
 		return Salida;
+		
+		}
+		else
+			return actualState.get(0).getResources();
+		
 	}
 	
 	@Override
 	public RoaringBitmap getSelectableTags(LinkedList<DState> actualState) {
 		
+		RoaringBitmap Salida=null;
 		
+		if (actualState.size()!=1)
+		{
 		Collections.sort(actualState, comparator);
 		
 		RoaringBitmap lista=new RoaringBitmap();
@@ -85,7 +100,7 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 		for (DState integer : actualState) 
 			lista.add(integer.getIde());
 			
-		RoaringBitmap Salida=CacheSelect.get(lista);
+		Salida=CacheSelect.get(lista);
 		if (Salida==null)
 		{
 		Salida= super.getSelectableTags(actualState);
@@ -95,6 +110,12 @@ public class DendrogramIndexAdvance extends DendrogramIndex{
 				System.out.println("Cache Activa Select");
 		
 		return Salida;
+		}
+		else
+			return actualState.get(0).getExtend();
+		
+		
+		
 	}
 	
 	
