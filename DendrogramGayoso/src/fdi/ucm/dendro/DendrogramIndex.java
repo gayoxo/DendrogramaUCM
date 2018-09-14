@@ -178,9 +178,10 @@ public class DendrogramIndex {
 					{
 						
 						DState Hijo = Father.getTransit().remove(0);
-						for (Integer hijo : Hijo.getResources())
-							Father.getResources().add(hijo);
-
+						Father.getResources().or(Hijo.getResources());
+//						for (Integer hijo : Hijo.getResources())
+//							Father.getResources().add(hijo);
+						
 						for (Integer hijo : Hijo.getIntent())
 							{
 							Father.getIntent().add(hijo);
