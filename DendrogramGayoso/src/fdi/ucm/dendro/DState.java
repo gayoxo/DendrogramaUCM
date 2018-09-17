@@ -44,13 +44,16 @@ public class DState {
 		return extend;
 	}
 	
-	public DState cloneS(List<Integer> toExtend,Integer ide) {
+	public DState cloneS(Integer ide) {
 		DState Salida=new DState(ide);
-		for (Integer integer : toExtend)
-			Salida.getIntent().add(integer);
+		Salida.getIntent().or(intent);
+		Salida.getResources().or(resources);
 		
-		for (Integer integer : resources) 
-			Salida.getResources().add(integer);
+//		for (Integer integer : intent)
+//			Salida.getIntent().add(integer);
+//		
+//		for (Integer integer : resources) 
+//			Salida.getResources().add(integer);
 
 		
 		return Salida;
@@ -66,5 +69,17 @@ public class DState {
 
 	public Integer getIde() {
 		return Ide;
+	}
+
+	public DState cloneS(List<Integer> toExtend, int ide) {
+		DState Salida=new DState(ide);
+		for (Integer integer : toExtend)
+			Salida.getIntent().add(integer);
+		
+		for (Integer integer : resources) 
+			Salida.getResources().add(integer);
+
+		
+		return Salida;
 	}
 }

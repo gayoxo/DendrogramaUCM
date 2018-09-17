@@ -46,6 +46,7 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
     		collection.addTags(a.getTagsFor());
                 RoaringBitmap tagsResource = collection.getTagsFor(a.getResource());
     		iindex.InsertResource(a.getResource(), tagsResource);
+    		selectableTags = computeInitialSelectableTags();
     		for (int tag : tagsResource) 
     			snapshotTags.put(tag, System.nanoTime());
         }	
@@ -53,6 +54,7 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
                 RoaringBitmap tagsResource = collection.getTagsFor(a.getResource());
         	collection.removeObject(a.getResource(), tagsResource);
 		iindex.DeleteResource(a.getResource(), tagsResource,collection);
+		selectableTags = computeInitialSelectableTags();
 		for (int tag : tagsResource) 
 		    snapshotTags.put(tag, System.nanoTime());
         }

@@ -19,7 +19,7 @@ public class claseInicio {
 	private final static int STEP=10000;
 	
 	private static final int Base = 1;
-	public static boolean debug = false;
+	public static boolean debug = true;
 
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -39,15 +39,24 @@ public class claseInicio {
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Cache Advance");
 		   simulate(new CachedAdvancedNavigationSystem(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("Dendrogram");
+//		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("Dendrogram Cached");
+//		   simulate(new DendroNavigationSystemAdvance(new DCollection(),true),actions,true);
+//		   System.gc();System.gc();System.gc();System.gc();
+//		   System.out.println("Dendrogram Cached V2");
+//		   simulate(new DendroNavigationSystemAdvanceV2(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
 		   System.out.println("Dendrogram");
-		   simulate(new DendroNavigationSystem(new DCollection(),true),actions,true);
+		   simulate(new DendroNavigationSystemComplete(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
-		   System.out.println("Dendrogram Cached");
-		   simulate(new DendroNavigationSystemAdvance(new DCollection(),true),actions,true);
+		   System.out.println("Dendrogram CacheL1");
+		   simulate(new DendroNavigationSystemCompleteAdvance(new DCollection(),true),actions,true);
 		   System.gc();System.gc();System.gc();System.gc();
-		   System.out.println("Dendrogram Cached V2");
-		   simulate(new DendroNavigationSystemAdvanceV2(new DCollection(),true),actions,true);
+		   System.out.println("Dendrogram CacheL2");
+		   simulate(new DendroNavigationSystemCompleteAdvanceV2(new DCollection(),true),actions,true);
 
 		   
 		   
@@ -193,6 +202,7 @@ public class claseInicio {
 	         if ((a+1)%STEP == 0 && out) System.out.println((a+1)+"\t"+time);
 	         
 	         if ((actions[a].isAdd()||actions[a].isRemove())&& debug && a>Base && getReso>0) {
+	        	 System.out.println(ns.getActiveTags());
 	        	 System.out.println("Res->"+ns.getFilteredResources());
 	        	 getReso--;
 	         }

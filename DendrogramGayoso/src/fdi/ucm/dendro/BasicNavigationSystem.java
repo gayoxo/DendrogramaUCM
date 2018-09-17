@@ -105,11 +105,13 @@ public class BasicNavigationSystem implements NavigationSystem {
         		collection.addObject(a.getResource(), a.getTagsFor());
         		collection.addTags(a.getTagsFor());
         		iindex.InsertResource(a.getResource(), a.getTagsFor());
+        		selectableTags = computeInitialSelectableTags();
         	}else
         		if (a.isDelete())
         		{
         			iindex.DeleteResource(a.getResource(), collection.getTagsFor(a.getResource()),collection);
         			collection.removeObject(a.getResource(), collection.getTagsFor(a.getResource()));
+        			selectableTags = computeInitialSelectableTags();
         		}
     }
 

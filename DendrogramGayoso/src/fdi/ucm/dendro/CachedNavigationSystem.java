@@ -78,6 +78,7 @@ public class CachedNavigationSystem extends BasicNavigationSystem {
         		resourceSetsStore.clear();
         		selectableTagsStore.clear();
         		representativesStore.clear();
+        		selectableTags = computeInitialSelectableTags();
         	}else
         		if (a.isDelete())
         		{
@@ -86,6 +87,7 @@ public class CachedNavigationSystem extends BasicNavigationSystem {
            		        resourceSetsStore.clear();
         		        selectableTagsStore.clear();
             		        representativesStore.clear();
+            		        selectableTags = computeInitialSelectableTags();
         		}
     }   
                
