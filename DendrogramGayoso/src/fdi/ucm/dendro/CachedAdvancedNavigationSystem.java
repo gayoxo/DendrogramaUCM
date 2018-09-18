@@ -11,6 +11,7 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
     private Map<RoaringBitmap,RoaringBitmap> representativesStore;
     private Map<Integer,Long> snapshotTags;
     private Map<RoaringBitmap,Long> snapshotState;
+    private Long snapshotTagsEmpty;
     
     public CachedAdvancedNavigationSystem(DCollection col,boolean vacio) {
         super(col,vacio);
@@ -30,7 +31,8 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
         for(int tag: collection.getTags()) {
             snapshotTags.put(tag,System.nanoTime());
         }
-        snapshotState.put(activeTags,System.nanoTime());
+        snapshotTagsEmpty = System.nanoTime();
+        snapshotState.put(activeTags.clone(),System.nanoTime());
     }
 
     @Override
@@ -46,18 +48,27 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
     		collection.addTags(a.getTagsFor());
                 RoaringBitmap tagsResource = collection.getTagsFor(a.getResource());
     		iindex.InsertResource(a.getResource(), tagsResource);
-    		selectableTags = computeInitialSelectableTags();
+
+            
     		for (int tag : tagsResource) 
     			snapshotTags.put(tag, System.nanoTime());
+    		
+    		snapshotTagsEmpty = System.nanoTime();
+    		
         }	
         else if (a.isDelete()) {
                 RoaringBitmap tagsResource = collection.getTagsFor(a.getResource());
         	collection.removeObject(a.getResource(), tagsResource);
 		iindex.DeleteResource(a.getResource(), tagsResource,collection);
-		selectableTags = computeInitialSelectableTags();
+
+//		resourceSetsStore.put(new RoaringBitmap(),collection.getResources());
+//        selectableTagsStore.put(new RoaringBitmap(),computeInitialSelectableTags());
+        
 		for (int tag : tagsResource) 
 		    snapshotTags.put(tag, System.nanoTime());
         }
+        
+        snapshotTagsEmpty = System.nanoTime();
         
         if (a.isAdd()||a.isRemove()) {
         
@@ -103,6 +114,10 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
     }     
 
     private boolean updated(Long timeSet, RoaringBitmap tagsFor) {
+    		
+    	if (activeTags.isEmpty())
+    		return snapshotTagsEmpty < timeSet;
+    	
             for(int tag: tagsFor) {
                 if(snapshotTags.get(tag) > timeSet) return false;
             }

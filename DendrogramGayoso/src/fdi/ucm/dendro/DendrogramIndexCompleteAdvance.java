@@ -155,7 +155,7 @@ public class DendrogramIndexCompleteAdvance {
 
 	private DState creaNodo(DState final1, RoaringBitmap processT) {
 		DState nuevo=new DState(ide++);
-		nuevo.setIntent(processT);
+		nuevo.getIntent().or(processT);
 //		for (Integer integer : processT)
 //			nuevo.getIntent().add(integer);
 		final1.getTransit().add(nuevo);
