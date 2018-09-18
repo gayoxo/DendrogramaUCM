@@ -19,7 +19,7 @@ public class claseInicio {
 	private final static int STEP=10000;
 	
 	private static final int Base = 1;
-	public static boolean debug = true;
+	public static boolean debug = false;
 
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException {
