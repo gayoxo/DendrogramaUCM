@@ -66,9 +66,11 @@ public class CachedAdvancedNavigationSystem extends BasicNavigationSystem {
         
 		for (int tag : tagsResource) 
 		    snapshotTags.put(tag, System.nanoTime());
+		
+		 snapshotTagsEmpty = System.nanoTime();
         }
         
-        snapshotTagsEmpty = System.nanoTime();
+       
         
         if (a.isAdd()||a.isRemove()) {
         
