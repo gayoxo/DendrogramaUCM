@@ -16,7 +16,7 @@ import org.roaringbitmap.RoaringBitmap;
 public class claseInicio {
 
 	private static final Random RAND=new Random();
-	private final static int STEP=10000;
+	private  static int STEP=10000;
 	
 	private static final int Base = 1;
 	public static boolean debug = false;
@@ -25,6 +25,14 @@ public class claseInicio {
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		 DCollection col = new DCollection();
 		   col.load(new FileReader(args[0]));
+		   
+		   if (args.length>1)
+			   try {
+				   STEP=Integer.parseInt(args[1]);
+			} catch (Exception e) {
+				STEP=10000;
+			}
+		   
 		   System.out.println("Collection loaded");
 		   NavigationAction[] actions = makeActions(col);
 		   
