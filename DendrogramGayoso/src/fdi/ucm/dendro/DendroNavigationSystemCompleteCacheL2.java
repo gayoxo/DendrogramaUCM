@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class DendroNavigationSystemCompleteAdvanceV2 implements NavigationSystem {
+public class DendroNavigationSystemCompleteCacheL2 implements NavigationSystem {
    protected DCollection collection;
-   protected DendrogramIndexCompleteAdvanceV2 iindex;
+   protected DendrogramIndexCompleteCacheL2 iindex;
    protected RoaringBitmap activeTags;
    protected RoaringBitmap filteredResources;
    protected RoaringBitmap selectableTags;
@@ -14,15 +14,15 @@ public class DendroNavigationSystemCompleteAdvanceV2 implements NavigationSystem
    
    
 
-   public DendroNavigationSystemCompleteAdvanceV2(DCollection collection,boolean vacio) {
+   public DendroNavigationSystemCompleteCacheL2(DCollection collection,boolean vacio) {
      this.collection = collection; 
      activeTags=new RoaringBitmap();
      ActualState=new LinkedList<>();
      
      if (vacio)
-    	 this.iindex = new DendrogramIndexCompleteAdvanceV2();
+    	 this.iindex = new DendrogramIndexCompleteCacheL2();
      else
-    	 this.iindex = new DendrogramIndexCompleteAdvanceV2(collection);
+    	 this.iindex = new DendrogramIndexCompleteCacheL2(collection);
      
    }
    

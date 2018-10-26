@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class DendroNavigationSystemCompleteAlternateAdvanceV2 implements NavigationSystem {
+public class DendroNavigationSystemCompleteInternalCache implements NavigationSystem {
    protected DCollection collection;
-   protected DendrogramIndexCompleteAdvanceV2 iindex;
+   protected DendrogramIndexComplete iindex;
    protected RoaringBitmap activeTags;
    protected RoaringBitmap filteredResources;
    protected RoaringBitmap selectableTags;
@@ -22,15 +22,15 @@ public class DendroNavigationSystemCompleteAlternateAdvanceV2 implements Navigat
    private Long snapshotTagsEmpty;
    
 
-   public DendroNavigationSystemCompleteAlternateAdvanceV2(DCollection collection,boolean vacio) {
+   public DendroNavigationSystemCompleteInternalCache(DCollection collection,boolean vacio) {
      this.collection = collection; 
      activeTags=new RoaringBitmap();
      ActualState=new LinkedList<>();
      
      if (vacio)
-    	 this.iindex = new DendrogramIndexCompleteAdvanceV2();
+    	 this.iindex = new DendrogramIndexComplete();
      else
-    	 this.iindex = new DendrogramIndexCompleteAdvanceV2(collection);
+    	 this.iindex = new DendrogramIndexComplete(collection);
      
      resourceSetsStore = new HashMap<>();
      selectableTagsStore = new HashMap<>();
@@ -142,7 +142,6 @@ public class DendroNavigationSystemCompleteAlternateAdvanceV2 implements Navigat
      	   }
     		
     		
-    		
             Long updatingTime = snapshotState.get(activeTags);   
             
             if(updatingTime != null && updated(updatingTime,activeTags)) {
@@ -154,7 +153,7 @@ public class DendroNavigationSystemCompleteAlternateAdvanceV2 implements Navigat
            }
            else {
         	   
-        	   
+        	
         	   
               RoaringBitmap atags = activeTags.clone();
               

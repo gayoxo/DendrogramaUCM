@@ -6,9 +6,9 @@ import java.util.Map;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class DendroNavigationSystemCompleteAlternateAdvance implements NavigationSystem {
+public class DendroNavigationSystemCompleteInternalCacheL2 implements NavigationSystem {
    protected DCollection collection;
-   protected DendrogramIndexCompleteAdvance iindex;
+   protected DendrogramIndexCompleteCacheL2 iindex;
    protected RoaringBitmap activeTags;
    protected RoaringBitmap filteredResources;
    protected RoaringBitmap selectableTags;
@@ -22,15 +22,15 @@ public class DendroNavigationSystemCompleteAlternateAdvance implements Navigatio
    private Long snapshotTagsEmpty;
    
 
-   public DendroNavigationSystemCompleteAlternateAdvance(DCollection collection,boolean vacio) {
+   public DendroNavigationSystemCompleteInternalCacheL2(DCollection collection,boolean vacio) {
      this.collection = collection; 
      activeTags=new RoaringBitmap();
      ActualState=new LinkedList<>();
      
      if (vacio)
-    	 this.iindex = new DendrogramIndexCompleteAdvance();
+    	 this.iindex = new DendrogramIndexCompleteCacheL2();
      else
-    	 this.iindex = new DendrogramIndexCompleteAdvance(collection);
+    	 this.iindex = new DendrogramIndexCompleteCacheL2(collection);
      
      resourceSetsStore = new HashMap<>();
      selectableTagsStore = new HashMap<>();
@@ -123,24 +123,25 @@ public class DendroNavigationSystemCompleteAlternateAdvance implements Navigatio
     	if (a.isAdd()||a.isRemove()) {
             
     		
-    		
-    		 if (a.isAdd())
-      	   {
-      		   if (ActualState.isEmpty())
- 					ActualState.add(iindex.getInicial());
- 				
- 					ActualState=iindex.transit(ActualState,a.getTag());
-      	   }
-      	   //a.isRemove()
-             else 
-      	   {
-          	   ActualState.clear();
+    		if (a.isAdd())
+     	   {
+     		   if (ActualState.isEmpty())
+					ActualState.add(iindex.getInicial());
+				
+					ActualState=iindex.transit(ActualState,a.getTag());
+     	   }
+     	   //a.isRemove()
+            else 
+     	   {
+         	   ActualState.clear();
 					 ActualState.add(iindex.getInicial());
 					 for (Integer dState : activeTags) {
 						 ActualState=iindex.transit(ActualState,dState);
 					 }
-          	   
-      	   }
+         	   
+     	   }
+    		
+    		
     		
             Long updatingTime = snapshotState.get(activeTags);   
             
@@ -153,7 +154,7 @@ public class DendroNavigationSystemCompleteAlternateAdvance implements Navigatio
            }
            else {
         	   
-        	  
+        	   
         	   
               RoaringBitmap atags = activeTags.clone();
               

@@ -10,13 +10,14 @@ import java.util.Set;
 
 import org.roaringbitmap.RoaringBitmap;
 
-public class DendrogramIndexCompleteAdvance {
+public class DendrogramIndexCompleteCacheL2 {
 
 	protected DState Inicial;
 	static int ide=0;
 	protected HashMap<Integer, DState> TablaRecursos;
 	protected HashMap<RoaringBitmap,RoaringBitmap> CacheResor;
 	protected HashMap<RoaringBitmap,RoaringBitmap> CacheSelect;
+	protected HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>> CacheTrans;
 	private static boolean debug=false;
 	protected Comparator<DState> comparator=new Comparator<DState>() {
 
@@ -26,18 +27,20 @@ public class DendrogramIndexCompleteAdvance {
 		}
 	};
 	
-	public DendrogramIndexCompleteAdvance() {
+	public DendrogramIndexCompleteCacheL2() {
 		Inicial	= new DState(ide++);
 		TablaRecursos= new HashMap<Integer, DState>();
 		CacheResor=new HashMap<RoaringBitmap,RoaringBitmap>();
 		CacheSelect=new HashMap<RoaringBitmap,RoaringBitmap>();
+		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
 	}
 	
-	public DendrogramIndexCompleteAdvance(DCollection collection) {
+	public DendrogramIndexCompleteCacheL2(DCollection collection) {
 		Inicial	= new DState(ide++);
 		TablaRecursos= new HashMap<Integer, DState>();
 		CacheResor=new HashMap<RoaringBitmap,RoaringBitmap>();
 		CacheSelect=new HashMap<RoaringBitmap,RoaringBitmap>();
+		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
 		for (Integer doc : collection.getResources()) {
 			InsertResource(doc,collection.getTagsFor(doc));
 		}
@@ -142,6 +145,7 @@ public class DendrogramIndexCompleteAdvance {
 	protected void cleanCache() {
 		CacheResor=new HashMap<RoaringBitmap,RoaringBitmap>();
 		CacheSelect=new HashMap<RoaringBitmap,RoaringBitmap>();
+		CacheTrans=new HashMap<RoaringBitmap,HashMap<Integer,LinkedList<DState>>>();
 	}
 	
 
@@ -229,14 +233,49 @@ public DState getInicial() {
 	return Inicial;
 }
 
+
+
 public LinkedList<DState> transit(List<DState> actualState, int tag) {
-	LinkedList<DState> Salida=new LinkedList<>();
 	
-	for (DState dState : actualState) 
-		Salida.addAll(transit(dState,tag));
+	LinkedList<DState> Salida=null;
+	
+	
+	RoaringBitmap lista=new RoaringBitmap();
+	
+	for (DState integer : actualState) 
+		lista.add(integer.getIde());
+	
+	HashMap<Integer, LinkedList<DState>> SalidaH=CacheTrans.get(lista);
+	
+	
+	if (SalidaH==null)
+		SalidaH=new HashMap<Integer, LinkedList<DState>>();
+	else
+		 Salida=SalidaH.get(new Integer(tag));
+	
+	if (Salida==null)
+	{
+		
+		Salida=new LinkedList<>();
+		
+		for (DState dState : actualState) 
+			Salida.addAll(transit(dState,tag));
+		
+//		Salida=transitInt(actualState, tag);
+		SalidaH.put(new Integer(tag), Salida);
+		CacheTrans.put(lista, SalidaH);
+	}
+	else
+		if (debug)
+			System.out.println("Cache Activa Trans"); 
 	
 	return Salida;
+	
+
 }
+
+
+
 
 
 public LinkedList<DState> transit(DState dState, int tag) {
